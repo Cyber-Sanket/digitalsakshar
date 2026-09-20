@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Digital_Sakshar - Responsive & Print Stylesheets
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .anatomy-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .progress-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 68px;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  .main-nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-120%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .main-nav.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sorting-baskets {
+    grid-template-columns: 1fr;
+  }
+
+  .email-client {
+    grid-template-columns: 1fr;
+  }
+
+  .email-sidebar {
+    display: none; /* Collapsed for mobile simplicity */
+  }
+
+  .typing-stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .visual-keyboard {
+    display: none; /* Hide heavy keyboard on small touch devices */
+  }
+
+  .certificate-wrapper {
+    padding: 1.5rem;
+    border-width: 6px;
+  }
+
+  .cert-student-name {
+    font-size: 1.6rem;
+  }
+}
+
+/* ==========================================================================
+   Print Stylesheet for Certificate
+   ========================================================================== */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .app-header,
+  .app-footer,
+  .access-bar,
+  .hero-section,
+  .sub-tabs-container,
+  .btn,
+  #toast-container {
+    display: none !important;
+  }
+
+  #certificate-print-area,
+  #certificate-print-area * {
+    visibility: visible;
+  }
+
+  #certificate-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 2cm;
+    box-shadow: none;
+    border: 10px double #b45309;
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
