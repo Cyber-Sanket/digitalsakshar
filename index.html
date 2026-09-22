@@ -22,54 +22,157 @@
        ====================================================================== -->
   <header class="app-header">
     <div class="container header-container">
-      <a href="#home" class="brand-logo" data-route="home">
-        <div class="brand-icon">🌐</div>
+      <a href="#home" class="brand-logo" data-route="home" aria-label="Digital Sakshar - Home">
+        <div class="brand-icon" aria-hidden="true">🌐</div>
         <div class="brand-text-wrapper">
-          <span class="brand-title">Digital_Sakshar</span>
+          <span class="brand-title">Digital <span class="brand-title-accent">Sakshar</span></span>
           <span class="brand-sub">डिजिटल साक्षरता अभियान</span>
         </div>
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="main-nav" id="mainNav">
-        <a href="#home" class="nav-link active" data-route="home">🏠 Home</a>
-        <a href="#computer" class="nav-link" data-route="computer">💻 Computer</a>
-        <a href="#practical" class="nav-link" data-route="practical">🖥️ Practical Skills</a>
-        <a href="#internet" class="nav-link" data-route="internet">🌐 Internet</a>
-        <a href="#resources" class="nav-link" data-route="resources">📚 Resources</a>
-        <a href="#quiz" class="nav-link" data-route="quiz">🧠 Quiz</a>
-        <a href="#progress" class="nav-link" data-route="progress">📊 Progress</a>
+      <!-- Desktop Nav & Mobile Drawer -->
+      <nav class="main-nav" id="mainNav" aria-label="Main Navigation">
+        <div class="mobile-nav-header">
+          <div class="mobile-nav-title">
+            <span class="mobile-nav-badge">मेनू / Navigation</span>
+            <span class="mobile-nav-hint">कोणत्याही विषयावर क्लिक करा</span>
+          </div>
+          <button class="mobile-nav-close-btn" id="mobileNavCloseBtn" aria-label="Close navigation menu">✕</button>
+        </div>
+
+        <div class="nav-links-list">
+          <a href="#home" class="nav-link active" data-route="home">
+            <span class="nav-icon" aria-hidden="true">🏠</span>
+            <div class="nav-text-group">
+              <span class="nav-label" data-i18n-en="Home" data-i18n-mr="मुख्यपृष्ठ">Home</span>
+              <span class="nav-desc" data-i18n-en="Dashboard & Literacy Score" data-i18n-mr="डॅशबोर्ड व साक्षरता मीटर">Dashboard & Overview</span>
+            </div>
+            <span class="nav-chevron" aria-hidden="true">›</span>
+          </a>
+
+          <a href="#computer" class="nav-link" data-route="computer">
+            <span class="nav-icon" aria-hidden="true">💻</span>
+            <div class="nav-text-group">
+              <span class="nav-label" data-i18n-en="Computer" data-i18n-mr="संगणक">Computer</span>
+              <span class="nav-desc" data-i18n-en="Hardware, OS, Memory & Files" data-i18n-mr="हार्डवेअर, ऑपरेटिंग सिस्टीम व फाईल्स">Hardware, OS & Parts</span>
+            </div>
+            <span class="nav-chevron" aria-hidden="true">›</span>
+          </a>
+
+          <a href="#practical" class="nav-link nav-link-featured" data-route="practical">
+            <span class="nav-icon" aria-hidden="true">🖥️</span>
+            <div class="nav-text-group">
+              <div class="nav-label-wrapper">
+                <span class="nav-label" data-i18n-en="Practical Skills" data-i18n-mr="प्रात्यक्षिक सराव">Practical Skills</span>
+                <span class="nav-badge-pill" data-i18n-en="Practice" data-i18n-mr="सराव">सराव</span>
+              </div>
+              <span class="nav-desc" data-i18n-en="Hands-on: Paint, Folder, Delete" data-i18n-mr="PC वरील प्रात्यक्षिक कृती व सिम्युलेटर">Hands-on PC Tasks</span>
+            </div>
+            <span class="nav-chevron" aria-hidden="true">›</span>
+          </a>
+
+          <a href="#internet" class="nav-link" data-route="internet">
+            <span class="nav-icon" aria-hidden="true">🌐</span>
+            <div class="nav-text-group">
+              <span class="nav-label" data-i18n-en="Internet" data-i18n-mr="इंटरनेट">Internet</span>
+              <span class="nav-desc" data-i18n-en="Browser, Search & Web Basics" data-i18n-mr="ब्राउझर, सर्च इंजिन व सुरक्षित शोध">Web & Browsing Basics</span>
+            </div>
+            <span class="nav-chevron" aria-hidden="true">›</span>
+          </a>
+
+          <a href="#resources" class="nav-link" data-route="resources">
+            <span class="nav-icon" aria-hidden="true">📚</span>
+            <div class="nav-text-group">
+              <span class="nav-label" data-i18n-en="Resources" data-i18n-mr="साहित्य">Resources</span>
+              <span class="nav-desc" data-i18n-en="Govt Portals & Learning Links" data-i18n-mr="शासकीय पोर्टल्स व उपयुक्त व्हिडिओ">Govt Portals & Guides</span>
+            </div>
+            <span class="nav-chevron" aria-hidden="true">›</span>
+          </a>
+
+          <a href="#quiz" class="nav-link" data-route="quiz">
+            <span class="nav-icon" aria-hidden="true">🧠</span>
+            <div class="nav-text-group">
+              <span class="nav-label" data-i18n-en="Quiz" data-i18n-mr="प्रश्नमंजुषा">Quiz</span>
+              <span class="nav-desc" data-i18n-en="4 Challenge Categories" data-i18n-mr="४ विभागांची ज्ञान चाचणी">Test Your Knowledge</span>
+            </div>
+            <span class="nav-chevron" aria-hidden="true">›</span>
+          </a>
+
+          <a href="#progress" class="nav-link" data-route="progress">
+            <span class="nav-icon" aria-hidden="true">📊</span>
+            <div class="nav-text-group">
+              <span class="nav-label" data-i18n-en="Progress" data-i18n-mr="प्रगती">Progress</span>
+              <span class="nav-desc" data-i18n-en="Badges & Printable Certificate" data-i18n-mr="८ बॅजेस व डिजिटल प्रमाणपत्र">Badges & Certificate</span>
+            </div>
+            <span class="nav-chevron" aria-hidden="true">›</span>
+          </a>
+        </div>
+
+        <!-- Mobile Drawer Accessibility Quick-Bar -->
+        <div class="mobile-drawer-footer">
+          <div class="mobile-tool-row">
+            <span class="mobile-tool-label">अक्षरांचा आकार (Font Size):</span>
+            <div class="segmented-control font-scale-group">
+              <button class="access-btn fontsize-btn active" data-size-val="normal" title="Normal Font Size">A</button>
+              <button class="access-btn fontsize-btn" data-size-val="large" title="Large Font Size">A+</button>
+              <button class="access-btn fontsize-btn" data-size-val="xlarge" title="Extra Large Font Size (Senior Mode)">A++</button>
+            </div>
+          </div>
+          <div class="mobile-tool-row">
+            <span class="mobile-tool-label">रंग थीम (Theme Mode):</span>
+            <div class="segmented-control theme-switch-group">
+              <button class="access-btn theme-btn active" data-theme-val="light" title="Light Theme">☀️ Light</button>
+              <button class="access-btn theme-btn" data-theme-val="dark" title="Dark Theme">🌙 Dark</button>
+              <button class="access-btn theme-btn" data-theme-val="senior" title="High Contrast Theme">👓 Contrast</button>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <!-- Accessibility Toolbar -->
-      <div class="access-bar">
+      <div class="access-bar" role="toolbar" aria-label="Accessibility and preferences">
         <!-- Language Switcher -->
-        <button class="access-btn" id="langToggleBtn" title="Switch Language (भाषा बदला)">🌐 EN | <strong>मर</strong></button>
+        <button class="access-btn lang-btn" id="langToggleBtn" title="Switch Language (भाषा बदला - EN ⇄ मराठी)" aria-label="Switch Language">
+          <span class="lang-icon" aria-hidden="true">🌐</span>
+          <span class="lang-text">EN | <strong>मर</strong></span>
+        </button>
 
-        <span style="color: var(--border-subtle);">|</span>
+        <span class="access-divider" aria-hidden="true"></span>
 
         <!-- Font Scaler -->
-        <button class="access-btn fontsize-btn active" data-size-val="normal" title="Normal Font Size">A</button>
-        <button class="access-btn fontsize-btn" data-size-val="large" title="Large Font Size">A+</button>
-        <button class="access-btn fontsize-btn" data-size-val="xlarge" title="Extra Large Font Size (Senior Mode)">A++</button>
+        <div class="segmented-control font-scale-group" role="group" aria-label="Font Size">
+          <button class="access-btn fontsize-btn active" data-size-val="normal" title="Normal Font Size (सामान्य आकार)" aria-label="Normal font size">A</button>
+          <button class="access-btn fontsize-btn" data-size-val="large" title="Large Font Size (मोठा आकार)" aria-label="Large font size">A+</button>
+          <button class="access-btn fontsize-btn" data-size-val="xlarge" title="Extra Large Font Size - Senior Citizen Mode (खूप मोठा आकार)" aria-label="Extra large font size">A++</button>
+        </div>
 
-        <span style="color: var(--border-subtle);">|</span>
+        <span class="access-divider" aria-hidden="true"></span>
 
         <!-- Theme Switcher -->
-        <button class="access-btn theme-btn active" data-theme-val="light" title="Light Theme">☀️</button>
-        <button class="access-btn theme-btn" data-theme-val="dark" title="Dark Theme">🌙</button>
-        <button class="access-btn theme-btn" data-theme-val="senior" title="High-Contrast Senior Citizen Theme">👓 High Contrast</button>
+        <div class="segmented-control theme-switch-group" role="group" aria-label="Color Theme">
+          <button class="access-btn theme-btn active" data-theme-val="light" title="Light Theme (प्रकाशमय)" aria-label="Light Theme">☀️</button>
+          <button class="access-btn theme-btn" data-theme-val="dark" title="Dark Theme (गडद)" aria-label="Dark Theme">🌙</button>
+          <button class="access-btn theme-btn senior-theme-btn" data-theme-val="senior" title="High-Contrast Senior Citizen Theme (वरिष्ठ नागरिकांसाठी उच्च कॉन्ट्रास्ट)" aria-label="High Contrast Theme">👓</button>
+        </div>
 
-        <span style="color: var(--border-subtle);">|</span>
+        <span class="access-divider" aria-hidden="true"></span>
 
         <!-- Audio Toggle -->
-        <button class="access-btn active" id="soundToggleBtn" title="Toggle Sound Feedback">🔊 Sound</button>
+        <button class="access-btn sound-btn active" id="soundToggleBtn" title="Toggle Sound Feedback (आवाज चालू/बंद)" aria-label="Toggle Sound">
+          <span class="sound-icon" aria-hidden="true">🔊</span>
+          <span class="sound-text">Sound</span>
+        </button>
 
         <!-- Mobile Menu Toggle -->
-        <button class="mobile-nav-toggle" id="mobileNavBtn" aria-label="Toggle Navigation">☰</button>
+        <button class="mobile-nav-toggle" id="mobileNavBtn" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="mainNav">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
       </div>
     </div>
   </header>
+  <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
 
   <!-- ======================================================================
        Main Content Views Container

@@ -8,6 +8,28 @@
 
 ---
 
+## 🧭 Navigation Structure
+
+The platform features a clean, responsive, modern, and accessible navigation bar:
+
+```text
+🌐 Digital Sakshar
+   डिजिटल साक्षरता अभियान
+
+🏠 Home
+💻 Computer
+🖥️ Practical Skills
+🌐 Internet
+📚 Resources
+🧠 Quiz
+📊 Progress
+```
+
+- **Desktop**: Clean pill-shaped navigation links with luminous active indicators, glowing squircle brand logo, and segmented accessibility controls (Bilingual `EN ⇄ मर` switcher, Font Scaler `A / A+ / A++`, Theme Mode `Light / Dark / High-Contrast`, and Audio feedback toggle).
+- **Tablet & Mobile**: Smooth animated hamburger-to-close (`✕`) toggle opening a slide-in navigation drawer featuring cards for each module with beginner-friendly Marathi descriptions, backdrop dismissal, and full touch accessibility.
+
+---
+
 ## 🚀 Key Features & Modules
 
 ### 1. 🏠 Home & Digital Dashboard

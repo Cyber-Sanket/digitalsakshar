@@ -17,7 +17,7 @@ const App = {
     const user = StorageManager.getUser();
     this.setTheme(user.theme || "light");
     this.setFontSize(user.fontSize || "normal");
-    this.setLanguage(user.language || "en");
+    this.setLanguage(user.language || "en", false);
 
     // Setup Navigation & Router
     this.setupRouter();
@@ -44,20 +44,26 @@ const App = {
     if (btn) {
       btn.addEventListener("click", () => {
         const nextLang = (this.currentLanguage === "en") ? "mr" : "en";
-        this.setLanguage(nextLang);
+        this.setLanguage(nextLang, true);
         this.playSound("click");
       });
     }
   },
 
-  setLanguage(lang) {
+  setLanguage(lang, notify = true) {
     this.currentLanguage = lang;
     document.documentElement.setAttribute("data-lang", lang);
     StorageManager.updateUser({ language: lang });
 
     const btn = document.getElementById("langToggleBtn");
     if (btn) {
-      btn.innerHTML = (lang === "en") ? "🌐 EN | <strong>मर</strong>" : "🌐 <strong>EN</strong> | मर";
+      const textSpan = btn.querySelector(".lang-text");
+      const html = (lang === "en") ? "EN | <strong>मर</strong>" : "<strong>EN</strong> | मर";
+      if (textSpan) {
+        textSpan.innerHTML = html;
+      } else {
+        btn.innerHTML = (lang === "en") ? "🌐 EN | <strong>मर</strong>" : "🌐 <strong>EN</strong> | मर";
+      }
       btn.title = (lang === "en") ? "Switch to Marathi (मराठीत बदला)" : "Switch to English (इंग्रजीत बदला)";
     }
 
@@ -72,12 +78,14 @@ const App = {
       }
     });
 
-    this.showToast(
-      lang === "mr" ? "भाषा बदलली: मराठी" : "Language Switched: English",
-      lang === "mr" ? "आता सर्व मुख्य माहिती मराठीत उपलब्ध आहे." : "Platform content is now in English.",
-      "info",
-      "🌐"
-    );
+    if (notify) {
+      this.showToast(
+        lang === "mr" ? "भाषा बदलली: मराठी" : "Language Switched: English",
+        lang === "mr" ? "आता सर्व मुख्य माहिती मराठीत उपलब्ध आहे." : "Platform content is now in English.",
+        "info",
+        "🌐"
+      );
+    }
   },
 
   // --------------------------------------------------------------------------
@@ -242,6 +250,18 @@ const App = {
         const size = btn.getAttribute("data-size-val");
         this.setFontSize(size);
         this.playSound("click");
+        const labels = {
+          normal: { en: "Normal Font Size (A)", mr: "सामान्य अक्षरांचा आकार (A)" },
+          large: { en: "Large Font Size (A+)", mr: "मोठा अक्षरांचा आकार (A+)" },
+          xlarge: { en: "Extra Large Font Size (A++)", mr: "खूप मोठा अक्षरांचा आकार (A++)" }
+        };
+        const label = labels[size] || labels.normal;
+        this.showToast(
+          this.currentLanguage === "mr" ? label.mr : label.en,
+          this.currentLanguage === "mr" ? "वाचनासाठी मजकुराचा आकार बदलला आहे." : "Text readability size successfully adjusted.",
+          "info",
+          "🔤"
+        );
       });
     });
 
@@ -253,15 +273,62 @@ const App = {
       soundBtn.addEventListener("click", () => this.toggleSound());
     }
 
-    // Mobile nav toggle
+    // Mobile nav toggle & drawer controls
     const mobileBtn = document.getElementById("mobileNavBtn");
+    const closeBtn = document.getElementById("mobileNavCloseBtn");
     const mainNav = document.getElementById("mainNav");
+    const backdrop = document.getElementById("navBackdrop");
+
+    const closeDrawer = () => {
+      if (mainNav) mainNav.classList.remove("active");
+      if (mobileBtn) {
+        mobileBtn.classList.remove("active");
+        mobileBtn.setAttribute("aria-expanded", "false");
+      }
+      if (backdrop) backdrop.classList.remove("active");
+      document.body.classList.remove("nav-open");
+    };
+
+    const openDrawer = () => {
+      if (mainNav) mainNav.classList.add("active");
+      if (mobileBtn) {
+        mobileBtn.classList.add("active");
+        mobileBtn.setAttribute("aria-expanded", "true");
+      }
+      if (backdrop) backdrop.classList.add("active");
+      document.body.classList.add("nav-open");
+    };
+
     if (mobileBtn && mainNav) {
       mobileBtn.addEventListener("click", () => {
-        mainNav.classList.toggle("active");
+        const isOpened = mainNav.classList.contains("active");
+        if (isOpened) {
+          closeDrawer();
+        } else {
+          openDrawer();
+        }
         this.playSound("click");
       });
     }
+
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        closeDrawer();
+        this.playSound("click");
+      });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener("click", () => {
+        closeDrawer();
+      });
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && mainNav && mainNav.classList.contains("active")) {
+        closeDrawer();
+      }
+    });
   },
 
   // --------------------------------------------------------------------------
@@ -309,7 +376,15 @@ const App = {
 
     // Close mobile menu if open
     const mainNav = document.getElementById("mainNav");
+    const mobileBtn = document.getElementById("mobileNavBtn");
+    const backdrop = document.getElementById("navBackdrop");
     if (mainNav) mainNav.classList.remove("active");
+    if (mobileBtn) {
+      mobileBtn.classList.remove("active");
+      mobileBtn.setAttribute("aria-expanded", "false");
+    }
+    if (backdrop) backdrop.classList.remove("active");
+    document.body.classList.remove("nav-open");
 
     // Hide all view sections, show active view
     document.querySelectorAll(".module-view").forEach(section => {
