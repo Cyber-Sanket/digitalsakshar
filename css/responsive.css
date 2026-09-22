@@ -25,16 +25,9 @@
 /* ==========================================================================
    Navigation & Header Responsive Rules
    ========================================================================== */
-@media (max-width: 1140px) {
+@media (max-width: 1080px) {
   .mobile-nav-toggle {
     display: flex;
-  }
-
-  .access-bar .font-scale-group,
-  .access-bar .theme-switch-group,
-  .access-bar .access-divider:nth-of-type(2),
-  .access-bar .access-divider:nth-of-type(3) {
-    display: none;
   }
 
   .main-nav {
@@ -230,17 +223,76 @@
   }
 }
 
-/* Dynamic Drawer Adaptation for A++ (Extra Large Font) on Medium Displays */
-@media (min-width: 1141px) and (max-width: 1260px) {
-  html[data-fontsize="xlarge"] .mobile-nav-toggle {
+/* Dynamic Drawer Adaptation for Large (A+) on Displays <= 1180px */
+@media (min-width: 1081px) and (max-width: 1180px) {
+  html[data-fontsize="large"] .mobile-nav-toggle {
     display: flex;
   }
 
-  html[data-fontsize="xlarge"] .access-bar .font-scale-group,
-  html[data-fontsize="xlarge"] .access-bar .theme-switch-group,
-  html[data-fontsize="xlarge"] .access-bar .access-divider:nth-of-type(2),
-  html[data-fontsize="xlarge"] .access-bar .access-divider:nth-of-type(3) {
+  html[data-fontsize="large"] .main-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 380px;
+    max-width: 90vw;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border-subtle);
+    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1rem 1.5rem 1rem;
+    transform: translateX(105%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1001;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  html[data-fontsize="large"] .main-nav.active {
+    transform: translateX(0);
+  }
+
+  html[data-fontsize="large"] .mobile-nav-header,
+  html[data-fontsize="large"] .mobile-drawer-footer,
+  html[data-fontsize="large"] .nav-desc,
+  html[data-fontsize="large"] .nav-chevron {
+    display: block;
+  }
+
+  html[data-fontsize="large"] .mobile-nav-header {
+    display: flex;
+  }
+
+  html[data-fontsize="large"] .nav-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex-grow: 1;
+  }
+
+  html[data-fontsize="large"] .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: var(--radius-lg);
+    background: var(--bg-input);
+    border: 1px solid transparent;
+    white-space: normal;
+  }
+
+  html[data-fontsize="large"] .nav-link.active::after {
     display: none;
+  }
+}
+
+/* Dynamic Drawer Adaptation for A++ (Extra Large Font) on Displays <= 1260px */
+@media (min-width: 1081px) and (max-width: 1260px) {
+  html[data-fontsize="xlarge"] .mobile-nav-toggle {
+    display: flex;
   }
 
   html[data-fontsize="xlarge"] .main-nav {
@@ -299,6 +351,16 @@
   }
 
   html[data-fontsize="xlarge"] .nav-link.active::after {
+    display: none;
+  }
+}
+
+/* Header toolbar compacting on narrow phone screens */
+@media (max-width: 640px) {
+  .access-bar .font-scale-group,
+  .access-bar .theme-switch-group,
+  .access-bar .access-divider:nth-of-type(2),
+  .access-bar .access-divider:nth-of-type(3) {
     display: none;
   }
 }

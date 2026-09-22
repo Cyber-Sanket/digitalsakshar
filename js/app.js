@@ -229,7 +229,9 @@ const App = {
   updateSoundBtnUI(enabled) {
     const btn = document.getElementById("soundToggleBtn");
     if (btn) {
-      btn.innerHTML = enabled ? "🔊 Sound" : "🔇 Mute";
+      btn.innerHTML = enabled
+        ? '<span class="sound-icon" aria-hidden="true">🔊</span><span class="sound-text">Sound</span>'
+        : '<span class="sound-icon" aria-hidden="true">🔇</span><span class="sound-text">Mute</span>';
       btn.classList.toggle("active", enabled);
     }
   },
