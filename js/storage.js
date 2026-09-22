@@ -1,15 +1,16 @@
 /**
  * Digital_Sakshar - Local Storage & Progress Manager
- * Handles persistent tracking of lessons, quizzes, simulators, badges, and user profile.
+ * Handles persistent tracking of lessons, quizzes, practical simulators, badges, and user profile.
  */
 
-const STORAGE_KEY = "digital_sakshar_state_v1";
+const STORAGE_KEY = "digital_sakshar_state_v2";
 
 const DEFAULT_STATE = {
   user: {
-    name: "Learner",
-    theme: "light", // 'light', 'dark', 'senior'
-    fontSize: "normal", // 'normal', 'large', 'xlarge'
+    name: "Digital Learner",
+    language: "en", // 'en' | 'mr'
+    theme: "light", // 'light' | 'dark' | 'senior'
+    fontSize: "normal", // 'normal' | 'large' | 'xlarge'
     soundEnabled: true,
     speechEnabled: true
   },
@@ -18,9 +19,19 @@ const DEFAULT_STATE = {
       anatomyExplored: false,
       sortingGameCompleted: false,
       sortingScore: 0,
-      desktopSimUsed: false,
-      paintArtSaved: false,
       topicsViewed: []
+    },
+    practicalSkills: {
+      paintLearned: false,
+      folderCreated: false,
+      textFileSaved: false,
+      copyPastePracticed: false,
+      fileRenamed: false,
+      fileDeleted: false,
+      fileRestored: false,
+      mousePracticed: false,
+      keyboardPracticed: false,
+      completedTopics: []
     },
     internetBasics: {
       browserExplored: false,
@@ -28,28 +39,16 @@ const DEFAULT_STATE = {
       emailComposed: false,
       topicsViewed: []
     },
-    digitalSafety: {
-      passwordTested: false,
-      otpScenarioPassed: false,
-      phishingScore: 0,
-      phishingCompleted: false,
+    resources: {
+      dictionarySearches: 0,
+      videosWatched: [],
       topicsViewed: []
-    },
-    typing: {
-      completedExercises: [],
-      bestWpm: 0,
-      bestAccuracy: 0,
-      totalWordsTyped: 0
     },
     quizzes: {
       computer: { attempted: false, bestScore: 0, totalQuestions: 10 },
+      practical: { attempted: false, bestScore: 0, totalQuestions: 10 },
       internet: { attempted: false, bestScore: 0, totalQuestions: 10 },
-      safety: { attempted: false, bestScore: 0, totalQuestions: 10 },
       allInOne: { attempted: false, bestScore: 0, totalQuestions: 15 }
-    },
-    resources: {
-      dictionarySearches: 0,
-      videosWatched: []
     }
   },
   achievements: [
@@ -57,7 +56,7 @@ const DEFAULT_STATE = {
       id: "beginner-learner",
       icon: "🥉",
       title: "Beginner Learner (सुरुवातीचा शिकणारा)",
-      desc: "Completed your first lesson or explored computer anatomy",
+      desc: "Completed your first computer learning activity",
       unlocked: false,
       unlockedAt: null
     },
@@ -65,7 +64,7 @@ const DEFAULT_STATE = {
       id: "file-manager",
       icon: "📁",
       title: "File Manager (संचिका व्यवस्थापक)",
-      desc: "Created a folder or file in the Desktop Simulator",
+      desc: "Completed folder and file practical lessons",
       unlocked: false,
       unlockedAt: null
     },
@@ -73,31 +72,31 @@ const DEFAULT_STATE = {
       id: "digital-artist",
       icon: "🎨",
       title: "Digital Artist (डिजिटल कलाकार)",
-      desc: "Created and downloaded a drawing in Paint Activity",
+      desc: "Completed the Paint drawing practical lesson",
       unlocked: false,
       unlockedAt: null
     },
     {
       id: "digital-explorer",
-      icon: "🥈",
+      icon: "🌐",
       title: "Digital Explorer (डिजिटल शोधक)",
-      desc: "Explored Internet Basics and tried Search simulator",
+      desc: "Explored Internet Basics and web browsing guides",
       unlocked: false,
       unlockedAt: null
     },
     {
-      id: "cyber-guardian",
-      icon: "🛡️",
-      title: "Cyber Guardian (सायबर रक्षक)",
-      desc: "Tested password strength & passed OTP and Phishing safety tests",
+      id: "pc-skills-master",
+      icon: "🖥️",
+      title: "PC Skills Master (संगणक कौशल्य मास्टर)",
+      desc: "Completed at least 5 Practical Computer Skills topics",
       unlocked: false,
       unlockedAt: null
     },
     {
-      id: "speed-typist",
-      icon: "⌨️",
-      title: "Key Master (कळफलक कुशल)",
-      desc: "Completed typing practice with at least 85% accuracy",
+      id: "learning-explorer",
+      icon: "📚",
+      title: "Learning Explorer (अभ्यास शोधक)",
+      desc: "Explored video tutorials, study notes, or Digital Dictionary",
       unlocked: false,
       unlockedAt: null
     },
@@ -113,7 +112,7 @@ const DEFAULT_STATE = {
       id: "certified-sakshar",
       icon: "🥇",
       title: "Certified Digital Sakshar (प्रमाणित डिजिटल साक्षर)",
-      desc: "Attained 75%+ overall digital literacy across all modules",
+      desc: "Attained 75%+ overall digital literacy across all active modules",
       unlocked: false,
       unlockedAt: null
     }
@@ -128,7 +127,6 @@ const StorageManager = {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         this.state = JSON.parse(stored);
-        // Ensure forward compatibility if new keys were added to DEFAULT_STATE
         this.state = this._deepMerge(DEFAULT_STATE, this.state);
       } else {
         this.state = JSON.parse(JSON.stringify(DEFAULT_STATE));
@@ -190,6 +188,9 @@ const StorageManager = {
 
   markTopicViewed(moduleKey, topicId) {
     if (!this.state.progress[moduleKey]) return;
+    if (!this.state.progress[moduleKey].topicsViewed) {
+      this.state.progress[moduleKey].topicsViewed = [];
+    }
     if (!this.state.progress[moduleKey].topicsViewed.includes(topicId)) {
       this.state.progress[moduleKey].topicsViewed.push(topicId);
       this.save();
@@ -209,21 +210,23 @@ const StorageManager = {
     this.checkAchievements();
   },
 
-  recordSafetyActivity(activity, val) {
-    this.state.progress.digitalSafety[activity] = val;
+  recordPracticalActivity(topicId, val) {
+    const p = this.state.progress.practicalSkills;
+    if (val) {
+      p[topicId] = true;
+      if (!p.completedTopics.includes(topicId)) {
+        p.completedTopics.push(topicId);
+      }
+    } else {
+      p[topicId] = false;
+      p.completedTopics = p.completedTopics.filter(t => t !== topicId);
+    }
     this.save();
     this.checkAchievements();
   },
 
-  recordTypingResult(exerciseId, wpm, accuracy) {
-    const t = this.state.progress.typing;
-    if (!t.completedExercises.includes(exerciseId)) {
-      t.completedExercises.push(exerciseId);
-    }
-    if (wpm > t.bestWpm) t.bestWpm = wpm;
-    if (accuracy > t.bestAccuracy) t.bestAccuracy = accuracy;
-    this.save();
-    this.checkAchievements();
+  isTopicCompleted(topicId) {
+    return this.state.progress.practicalSkills.completedTopics.includes(topicId);
   },
 
   recordQuizScore(category, score, total) {
@@ -238,42 +241,55 @@ const StorageManager = {
   },
 
   // Calculate Overall Literacy Percentage (0 - 100%)
+  // Recommended weighting:
+  // Computer Basics:     25%
+  // Practical Skills:    30%
+  // Internet Basics:     20%
+  // Learning Resources:  10%
+  // Interactive Quizzes: 15%
+  // Total:              100%
   calculateLiteracyScore() {
     const p = this.state.progress;
     let totalPoints = 0;
-    const maxPoints = 100;
 
-    // Computer Basics (max 25 pts)
-    if (p.computerBasics.anatomyExplored) totalPoints += 5;
-    if (p.computerBasics.sortingGameCompleted) totalPoints += 7;
-    if (p.computerBasics.desktopSimUsed) totalPoints += 6;
-    if (p.computerBasics.paintArtSaved) totalPoints += 7;
+    // 1. Computer Basics (max 25 pts)
+    let compPts = 0;
+    if (p.computerBasics.anatomyExplored) compPts += 10;
+    if (p.computerBasics.sortingGameCompleted) compPts += 10;
+    if (p.computerBasics.topicsViewed && p.computerBasics.topicsViewed.length > 0) compPts += 5;
+    totalPoints += Math.min(25, compPts);
 
-    // Internet Basics (max 20 pts)
-    if (p.internetBasics.browserExplored) totalPoints += 6;
-    if (p.internetBasics.searchSimUsed) totalPoints += 7;
-    if (p.internetBasics.emailComposed) totalPoints += 7;
+    // 2. Practical Skills (max 30 pts)
+    const completedCount = p.practicalSkills.completedTopics ? p.practicalSkills.completedTopics.length : 0;
+    const practicalPts = Math.round((completedCount / 9) * 30);
+    totalPoints += Math.min(30, practicalPts);
 
-    // Digital Safety (max 25 pts)
-    if (p.digitalSafety.passwordTested) totalPoints += 7;
-    if (p.digitalSafety.otpScenarioPassed) totalPoints += 8;
-    if (p.digitalSafety.phishingCompleted) totalPoints += 10;
+    // 3. Internet Basics (max 20 pts)
+    let netPts = 0;
+    if (p.internetBasics.browserExplored) netPts += 7;
+    if (p.internetBasics.searchSimUsed) netPts += 7;
+    if (p.internetBasics.emailComposed) netPts += 6;
+    totalPoints += Math.min(20, netPts);
 
-    // Typing Practice (max 10 pts)
-    if (p.typing.completedExercises.length >= 1) totalPoints += 5;
-    if (p.typing.completedExercises.length >= 3) totalPoints += 5;
+    // 4. Learning Resources (max 10 pts)
+    let resPts = 0;
+    if (p.resources.videosWatched && p.resources.videosWatched.length > 0) resPts += 4;
+    if (p.resources.dictionarySearches > 0) resPts += 3;
+    if (p.resources.topicsViewed && p.resources.topicsViewed.length > 0) resPts += 3;
+    totalPoints += Math.min(10, resPts);
 
-    // Quizzes (max 20 pts)
-    let quizTotal = 0;
-    let quizCount = 0;
-    ['computer', 'internet', 'safety'].forEach(k => {
-      if (p.quizzes[k].attempted) {
-        quizTotal += (p.quizzes[k].bestScore / p.quizzes[k].totalQuestions);
-        quizCount++;
+    // 5. Quizzes (max 15 pts)
+    let quizSum = 0;
+    let attemptedCount = 0;
+    ['computer', 'practical', 'internet', 'allInOne'].forEach(k => {
+      const q = p.quizzes[k];
+      if (q && q.attempted) {
+        quizSum += (q.bestScore / q.totalQuestions);
+        attemptedCount++;
       }
     });
-    if (quizCount > 0) {
-      totalPoints += Math.round((quizTotal / 3) * 20);
+    if (attemptedCount > 0) {
+      totalPoints += Math.min(15, Math.round((quizSum / attemptedCount) * 15));
     }
 
     return Math.min(100, Math.round(totalPoints));
@@ -295,45 +311,51 @@ const StorageManager = {
     };
 
     // 1. Beginner Learner
-    if (p.computerBasics.anatomyExplored || p.computerBasics.topicsViewed.length > 0) {
+    if (p.computerBasics.anatomyExplored || (p.computerBasics.topicsViewed && p.computerBasics.topicsViewed.length > 0) || (p.practicalSkills.completedTopics && p.practicalSkills.completedTopics.length > 0)) {
       unlockBadge("beginner-learner");
     }
+
     // 2. File Manager
-    if (p.computerBasics.desktopSimUsed) {
+    if (p.practicalSkills.folder || p.practicalSkills.folderCreated || p.practicalSkills.rename || p.practicalSkills.fileRenamed || p.practicalSkills.delete || p.practicalSkills.fileDeleted || p.practicalSkills.restore || p.practicalSkills.fileRestored || (p.practicalSkills.completedTopics && (p.practicalSkills.completedTopics.includes("folder") || p.practicalSkills.completedTopics.includes("rename") || p.practicalSkills.completedTopics.includes("delete") || p.practicalSkills.completedTopics.includes("restore")))) {
       unlockBadge("file-manager");
     }
+
     // 3. Digital Artist
-    if (p.computerBasics.paintArtSaved) {
+    if (p.practicalSkills.paint || p.practicalSkills.paintLearned || (p.practicalSkills.completedTopics && p.practicalSkills.completedTopics.includes("paint"))) {
       unlockBadge("digital-artist");
     }
+
     // 4. Digital Explorer
-    if (p.internetBasics.browserExplored && p.internetBasics.searchSimUsed) {
+    if (p.internetBasics.browserExplored || p.internetBasics.searchSimUsed) {
       unlockBadge("digital-explorer");
     }
-    // 5. Cyber Guardian
-    if (p.digitalSafety.passwordTested && p.digitalSafety.otpScenarioPassed && p.digitalSafety.phishingCompleted) {
-      unlockBadge("cyber-guardian");
+
+    // 5. PC Skills Master (at least 5 practical skills topics completed)
+    if (p.practicalSkills.completedTopics && p.practicalSkills.completedTopics.length >= 5) {
+      unlockBadge("pc-skills-master");
     }
-    // 6. Speed Typist
-    if (p.typing.bestAccuracy >= 85 && p.typing.completedExercises.length > 0) {
-      unlockBadge("speed-typist");
+
+    // 6. Learning Explorer
+    if ((p.resources.videosWatched && p.resources.videosWatched.length > 0) || p.resources.dictionarySearches > 0 || (p.resources.topicsViewed && p.resources.topicsViewed.length > 0)) {
+      unlockBadge("learning-explorer");
     }
-    // 7. Quiz Champion
-    const quizHigh = ['computer', 'internet', 'safety'].some(k => {
+
+    // 7. Quiz Champion (80%+ on any quiz)
+    const quizWon = ['computer', 'practical', 'internet', 'allInOne'].some(k => {
       const q = p.quizzes[k];
-      return q.attempted && (q.bestScore / q.totalQuestions) >= 0.8;
+      return q && q.attempted && (q.bestScore / q.totalQuestions) >= 0.8;
     });
-    if (quizHigh) {
+    if (quizWon) {
       unlockBadge("quiz-master");
     }
-    // 8. Certified Digital Sakshar
+
+    // 8. Certified Digital Sakshar (75%+ overall progress)
     if (overallScore >= 75) {
       unlockBadge("certified-sakshar");
     }
 
     if (newlyUnlocked.length > 0) {
       this.save();
-      // Dispatch custom event for UI reaction (toasts, fanfares)
       window.dispatchEvent(new CustomEvent("sakshar_achievement_unlocked", {
         detail: { badges: newlyUnlocked }
       }));
@@ -352,3 +374,5 @@ const StorageManager = {
     window.location.reload();
   }
 };
+
+window.StorageManager = StorageManager;

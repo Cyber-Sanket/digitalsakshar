@@ -1,9 +1,9 @@
 /**
  * Digital_Sakshar - Progress, Achievements & Certificate Generator Module
  * Features:
- * - Real-time Digital Literacy Index calculation
- * - Detailed progress breakdown across all 8 modules
- * - Unlocked badge showcases with celebratory fanfares
+ * - Real-time Digital Literacy Index calculation (Weighted active modules)
+ * - Category progress bars for Computer Basics, Practical Skills, Internet Basics, Resources, and Quizzes
+ * - Unlocked 8 badge showcases with celebratory fanfares
  * - High-resolution printable Certificate of Digital Literacy
  */
 
@@ -40,61 +40,60 @@ const ProgressModule = {
     if (heroMeter) heroMeter.textContent = `${overallScore}%`;
     if (heroFill) heroFill.style.width = `${overallScore}%`;
 
-    // 2. Category Progress Bars
-    // Computer Basics (max 25)
+    // 2. Category Progress Calculations
+    // Computer Basics (max 25 pts)
     let compScore = 0;
-    if (progress.computerBasics.anatomyExplored) compScore += 6;
-    if (progress.computerBasics.sortingGameCompleted) compScore += 7;
-    if (progress.computerBasics.desktopSimUsed) compScore += 6;
-    if (progress.computerBasics.paintArtSaved) compScore += 6;
+    if (progress.computerBasics.anatomyExplored) compScore += 10;
+    if (progress.computerBasics.sortingGameCompleted) compScore += 10;
+    if (progress.computerBasics.topicsViewed && progress.computerBasics.topicsViewed.length > 0) compScore += 5;
     const compPercent = Math.min(100, Math.round((compScore / 25) * 100));
 
-    // Internet Basics (max 20)
+    // Practical Computer Skills (max 30 pts, 9 topics)
+    const completedPractical = progress.practicalSkills.completedTopics ? progress.practicalSkills.completedTopics.length : 0;
+    const practicalPercent = Math.min(100, Math.round((completedPractical / 9) * 100));
+
+    // Internet Basics (max 20 pts)
     let netScore = 0;
-    if (progress.internetBasics.browserExplored) netScore += 6;
+    if (progress.internetBasics.browserExplored) netScore += 7;
     if (progress.internetBasics.searchSimUsed) netScore += 7;
-    if (progress.internetBasics.emailComposed) netScore += 7;
+    if (progress.internetBasics.emailComposed) netScore += 6;
     const netPercent = Math.min(100, Math.round((netScore / 20) * 100));
 
-    // Digital Safety (max 25)
-    let safeScore = 0;
-    if (progress.digitalSafety.passwordTested) safeScore += 7;
-    if (progress.digitalSafety.otpScenarioPassed) safeScore += 8;
-    if (progress.digitalSafety.phishingCompleted) safeScore += 10;
-    const safePercent = Math.min(100, Math.round((safeScore / 25) * 100));
+    // Learning Resources (max 10 pts)
+    let resScore = 0;
+    if (progress.resources.videosWatched && progress.resources.videosWatched.length > 0) resScore += 4;
+    if (progress.resources.dictionarySearches > 0) resScore += 3;
+    if (progress.resources.topicsViewed && progress.resources.topicsViewed.length > 0) resScore += 3;
+    const resPercent = Math.min(100, Math.round((resScore / 10) * 100));
 
-    // Typing (max 10)
-    const typingCount = progress.typing.completedExercises.length;
-    const typingPercent = Math.min(100, typingCount * 25);
-
-    // Quizzes (max 20)
+    // Quizzes (max 15 pts)
     let quizAvg = 0;
     let attemptedCount = 0;
-    ['computer', 'internet', 'safety'].forEach(k => {
+    ['computer', 'practical', 'internet', 'allInOne'].forEach(k => {
       const q = progress.quizzes[k];
-      if (q.attempted) {
+      if (q && q.attempted) {
         quizAvg += (q.bestScore / q.totalQuestions) * 100;
         attemptedCount++;
       }
     });
-    const quizPercent = attemptedCount > 0 ? Math.round(quizAvg / 3) : 0;
+    const quizPercent = attemptedCount > 0 ? Math.round(quizAvg / attemptedCount) : 0;
 
     // Update DOM bars
     this.updateBar("barComp", compPercent);
+    this.updateBar("barPractical", practicalPercent, `${completedPractical} / 9 Topics Completed`);
     this.updateBar("barNet", netPercent);
-    this.updateBar("barSafe", safePercent);
-    this.updateBar("barType", typingPercent);
+    this.updateBar("barRes", resPercent);
     this.updateBar("barQuiz", quizPercent);
 
     // Update Quick Stat Counts on Home Hero
     const statBadges = document.getElementById("statBadgesCount");
     const statQuizzes = document.getElementById("statQuizzesCount");
-    const statTyping = document.getElementById("statTypingWpm");
+    const statPractical = document.getElementById("statPracticalTopics");
 
     const unlockedCount = achievements.filter(a => a.unlocked).length;
     if (statBadges) statBadges.textContent = `${unlockedCount} / ${achievements.length}`;
-    if (statQuizzes) statQuizzes.textContent = `${attemptedCount} / 3`;
-    if (statTyping) statTyping.textContent = `${progress.typing.bestWpm || 0} WPM`;
+    if (statQuizzes) statQuizzes.textContent = `${attemptedCount} / 4`;
+    if (statPractical) statPractical.textContent = `${completedPractical} / 9 Topics`;
 
     // 3. Render Badges Grid
     const badgesContainer = document.getElementById("achievementsGrid");
@@ -117,11 +116,11 @@ const ProgressModule = {
     this.updateCertificatePreview();
   },
 
-  updateBar(id, percent) {
+  updateBar(id, percent, customText = null) {
     const bar = document.getElementById(id);
     const text = document.getElementById(`${id}Val`);
     if (bar) bar.style.width = `${percent}%`;
-    if (text) text.textContent = `${percent}%`;
+    if (text) text.textContent = customText || `${percent}%`;
   },
 
   // --------------------------------------------------------------------------
@@ -160,7 +159,7 @@ const ProgressModule = {
 
     if (resetBtn) {
       resetBtn.addEventListener("click", () => {
-        if (confirm("Are you sure you want to reset all your learning progress, quiz scores, and badges?")) {
+        if (confirm("Are you sure you want to reset all your learning progress, practical tasks, and quiz scores?")) {
           StorageManager.resetAllProgress();
         }
       });

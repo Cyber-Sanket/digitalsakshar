@@ -33,12 +33,12 @@ const ResourcesModule = {
     },
     {
       id: "v3",
-      title: "Digital Banking, UPI & OTP Safety Rules",
-      marathiTitle: "डिजिटल बँकिंग, UPI आणि OTP सुरक्षितता नियम",
-      duration: "12 mins",
-      thumbnailIcon: "🛡️",
-      embedUrl: "https://www.youtube-nocookie.com/embed/inWWhr5tnEA",
-      summary: "Crucial guidelines from RBI on identifying phishing calls, fake loan SMS, and why you should never share your PIN or OTP."
+      title: "Practical PC Skills: Files & Folders Mastery",
+      marathiTitle: "प्रात्यक्षिक संगणक कौशल्ये: फाइल्स आणि फोल्डर्स व्यवस्थापन",
+      duration: "10 mins",
+      thumbnailIcon: "📁",
+      embedUrl: "https://www.youtube-nocookie.com/embed/BvHqH0h5K8o",
+      summary: "Learn how to create folders, move documents, rename items, and keep your Windows desktop clean and organized."
     },
     {
       id: "v4",

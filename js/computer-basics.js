@@ -99,15 +99,147 @@ const ComputerModule = {
       analogy: "📚 The Library Bookshelf: All your photo albums, study books, and videos are permanently stored here safely even when the lights are turned off.",
       desc: "Solid State Drives (SSDs) and Hard Disk Drives (HDDs) hold the Operating System, software files, and your personal data permanently.",
       specs: ["SSDs are 5x-10x faster than traditional spinning HDDs", "Capacities: 512GB, 1TB, 2TB", "Non-volatile: data survives power loss"]
+    },
+    printer: {
+      title: "Printer (मुद्रक)",
+      marathi: "मुद्रक साधन (Printer)",
+      category: "Output Device (आऊटपुट साधन)",
+      badge: "badge-success",
+      analogy: "🖨️ The Xerox Machine: Just as a photocopier prints onto paper, a printer transfers digital files, letters, and photos into physical paper sheets.",
+      desc: "An external hardware output device that converts digital documents on screen into physical hard-copy prints.",
+      specs: ["Laser, Inkjet, or Thermal printing", "Color and Black & White printing", "Connects via USB or Wireless Wi-Fi"]
+    },
+    speakers: {
+      title: "Speakers & Headphones (ध्वनिक्षेपक)",
+      marathi: "ध्वनिक्षेपक / आवाज साधन",
+      category: "Output Device (आऊटपुट साधन)",
+      badge: "badge-success",
+      analogy: "📢 The Radio Loudspeaker: Converts electrical digital audio data into audible music, voices, video sound, and accessibility speech.",
+      desc: "Audio output devices enabling users to listen to video tutorials, voice calls, music, and spoken instructions.",
+      specs: ["Built-in laptop speakers or external 3.5mm jack", "Bluetooth wireless audio support", "Stereo sound channels"]
     }
   },
 
+  // 7 Core Educational Topics
+  educationalTopics: [
+    {
+      id: "what-is-computer",
+      icon: "💻",
+      title: "1. What is a Computer?",
+      mrTitle: "संगणक म्हणजे काय?",
+      desc: "An electronic machine that accepts raw data (Input), computes it at high speed (Processing), produces meaningful results (Output), and preserves data (Storage) — the universal IPOS cycle.",
+      analogy: "Think of an automatic juicer: oranges in (Input), motor crushes them (Process), juice in glass (Output), extra pulp saved (Storage).",
+      points: ["Executes millions of calculations per second", "High accuracy without fatigue", "Operates using binary machine code (0s and 1s)"]
+    },
+    {
+      id: "parts-of-computer",
+      icon: "🖥️",
+      title: "2. Parts of a Computer",
+      mrTitle: "संगणकाचे प्रमुख भाग",
+      desc: "A complete computer setup consists of Monitor (Display), CPU Cabinet (Processor & Motherboard), Keyboard (Typing input), Mouse (Pointing input), and power supply.",
+      analogy: "Just like the human body has eyes (Monitor), a brain (CPU), hands (Keyboard/Mouse), and memory storage.",
+      points: ["Monitor displays graphical feedback", "CPU coordinates all hardware parts", "Connects via HDMI, USB, and audio jacks"]
+    },
+    {
+      id: "uses-of-computers",
+      icon: "🏢",
+      title: "3. Uses of Computers",
+      mrTitle: "संगणकाचे विविध क्षेत्रांतील उपयोग",
+      desc: "Computers are indispensable tools across modern society: Schools & Universities, Digital Banking & ATMs, Hospitals & Diagnostics, and Everyday Communication.",
+      analogy: "A multi-purpose digital tool: a library for students, an accounting ledger for shops, a medical diagnostic center for doctors.",
+      points: [
+        "Education: Online classes, study materials, digital literacy",
+        "Banking: ATM withdrawals, UPI transfers, account management",
+        "Healthcare: Digital patient records, MRI scans, patient monitoring",
+        "Daily Life: Booking railway tickets, online payments, video calling"
+      ]
+    },
+    {
+      id: "input-output-devices",
+      icon: "📥",
+      title: "4. Input vs Output Devices",
+      mrTitle: "इनपुट आणि आऊटपुट साधने",
+      desc: "Input devices allow humans to enter data and instructions into the computer. Output devices display or reproduce the results of processed data.",
+      analogy: "Input is like speaking into someone's ear; Output is like listening to them reply back.",
+      points: [
+        "Input: Keyboard, Mouse, Microphone, Webcam, Scanner",
+        "Output: Monitor, Printer, Speakers, Projector, Headphones"
+      ]
+    },
+    {
+      id: "hardware-software",
+      icon: "⚙️",
+      title: "5. Hardware vs Software",
+      mrTitle: "हार्डवेअर आणि सॉफ्टवेअर",
+      desc: "Hardware refers to tangible physical machinery you can touch. Software consists of intangible digital code, apps, and operating systems.",
+      analogy: "A physical music CD is Hardware; the songs recorded on it are Software. Neither is useful without the other.",
+      points: [
+        "Hardware: Screen, Motherboard, Keyboard, Mouse, RAM",
+        "System Software: Microsoft Windows, macOS, Android, Linux",
+        "Application Software: MS Paint, Google Chrome, Word, Calculator"
+      ]
+    },
+    {
+      id: "basic-applications",
+      icon: "📱",
+      title: "6. Basic Computer Applications",
+      mrTitle: "दैनंदिन वापरातील मूलभूत ॲप्स",
+      desc: "Every computer comes with standard software tools designed for everyday practical tasks.",
+      analogy: "Hand tools in a home toolbox: a hammer, a measuring tape, each specialized for a practical task.",
+      points: [
+        "Word Processor / Notepad: Type letters, resumes, and text notes",
+        "Web Browser: Browse internet sites (Chrome, Edge)",
+        "Media Player: Watch videos and listen to music",
+        "Calculator & Paint: Quick calculations and digital drawing"
+      ]
+    },
+    {
+      id: "files-folders",
+      icon: "📁",
+      title: "7. Files and Folders",
+      mrTitle: "फाइल्स आणि फोल्डर्सची संकल्पना",
+      desc: "A File is a single unit of digital information with a unique name and extension (.txt, .jpg, .pdf). A Folder is a container used to group multiple files neatly.",
+      analogy: "A paper document is a File; a sturdy filing cabinet holding 50 documents is a Folder.",
+      points: [
+        "File name & extension: e.g. 'Aadhaar_Card_2026.pdf'",
+        "Extension types: .pdf (document), .jpg (image), .mp4 (video)",
+        "Storage: Organize by year, topic, or person for quick access"
+      ]
+    }
+  ],
+
   init() {
     this.setupSubTabs();
+    this.renderEducationalTopics();
     this.setupAnatomy();
     this.setupSortingActivity();
     this.setupDesktopSim();
     this.setupPaintCanvas();
+  },
+
+  renderEducationalTopics() {
+    const container = document.getElementById("compTopicsGrid");
+    if (!container) return;
+
+    container.innerHTML = this.educationalTopics.map(t => `
+      <div class="card" style="padding: 1.25rem;">
+        <div class="meter-header">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span style="font-size:1.6rem;">${t.icon}</span>
+            <h4 style="margin:0; font-size:1.05rem;">${t.title}</h4>
+          </div>
+          <span class="badge badge-primary">Core Concept</span>
+        </div>
+        <div class="section-marathi-subtitle" style="margin: 0.35rem 0 0.5rem 0; font-size:0.88rem;">${t.mrTitle}</div>
+        <p style="font-size:0.88rem; line-height:1.5;">${t.desc}</p>
+        <div class="tip-card" style="margin: 0.75rem 0; padding: 0.6rem 0.85rem; font-size:0.82rem;">
+          💡 <strong>Analogy:</strong> ${t.analogy}
+        </div>
+        <ul style="padding-left:1.2rem; font-size:0.82rem; color:var(--text-muted); margin:0;">
+          ${t.points.map(p => `<li style="margin-bottom:0.25rem;">${p}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
   },
 
   onEnter() {

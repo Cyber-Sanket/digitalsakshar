@@ -1,6 +1,11 @@
 /**
  * Digital_Sakshar - Quiz Question Bank
  * Categorized MCQs with 4 options, explanations, and bilingual clarity.
+ * Categories:
+ * 1. Computer Basics (10 MCQs)
+ * 2. Practical Computer Skills (10 MCQs)
+ * 3. Internet Basics (10 MCQs)
+ * 4. Grand Digital_Sakshar Challenge (15 Mixed MCQs from the 3 modules)
  */
 
 const QUIZ_DATA = {
@@ -55,54 +60,167 @@ const QUIZ_DATA = {
         id: "c5",
         question: "Which of the following is an example of System Software (Operating System)?",
         marathiSub: "खालीलपैकी कोणती कार्यप्रणाली (Operating System) आहे?",
-        options: ["Microsoft Windows", "MS Paint", "Calculator", "WhatsApp"],
+        options: ["Microsoft Windows", "MS Paint", "Calculator", "VLC Media Player"],
         correctIndex: 0,
         explanation: "Microsoft Windows is an Operating System that manages all hardware components and software programs."
       },
       {
         id: "c6",
-        question: "Where do deleted files typically go on a Windows computer?",
-        marathiSub: "संगणकावरून हटवलेल्या फाइल्स साधारणतः कोठे जमा होतात?",
-        options: ["Control Panel", "Recycle Bin", "My Documents", "Internet"],
-        correctIndex: 1,
-        explanation: "Deleted files are temporarily stored in the Recycle Bin, allowing you to restore them if deleted by accident."
+        question: "Which device produces physical hard-copy prints on paper?",
+        marathiSub: "कागदावर प्रत्यक्ष प्रिंट काढण्यासाठी कोणते साधन वापरले जाते?",
+        options: ["Scanner", "Webcam", "Printer (मुद्रक)", "Microphone"],
+        correctIndex: 2,
+        explanation: "A Printer is an output device that prints digital documents, text, and images onto physical paper."
       },
       {
         id: "c7",
-        question: "Which shortcut key is commonly used to COPY selected text or files?",
-        marathiSub: "निवडलेला मजकूर किंवा फाइल कॉपी करण्यासाठी कोणता शॉर्टकट वापरतात?",
-        options: ["Ctrl + V", "Ctrl + C", "Ctrl + Z", "Ctrl + P"],
-        correctIndex: 1,
-        explanation: "Ctrl + C is used to Copy, while Ctrl + V is used to Paste."
+        question: "Which component outputs sound, music, and voice from the computer?",
+        marathiSub: "संगणकामधून आवाज, गाणी आणि संवाद ऐकण्यासाठी कोणते साधन वापरतात?",
+        options: ["Speakers (स्पीकर्स)", "Monitor", "RAM", "Mouse"],
+        correctIndex: 0,
+        explanation: "Speakers are audio output devices that convert electrical audio signals into audible sound waves."
       },
       {
         id: "c8",
-        question: "Which of these devices is an OUTPUT device?",
-        marathiSub: "यापैकी कोणते आऊटपुट साधन (Output Device) आहे?",
-        options: ["Microphone", "Webcam", "Printer", "Barcode Scanner"],
-        correctIndex: 2,
-        explanation: "A Printer gives physical output by printing digital documents on sheets of paper."
+        question: "What is the key difference between Hardware and Software?",
+        marathiSub: "हार्डवेअर आणि सॉफ्टवेअरमधील मुख्य फरक काय आहे?",
+        options: [
+          "Hardware is physical parts you can touch; Software is programs and instructions",
+          "Hardware runs on battery; Software runs on solar power",
+          "Hardware is free; Software is always paid",
+          "Hardware connects to internet; Software cannot connect"
+        ],
+        correctIndex: 0,
+        explanation: "Hardware refers to tangible physical machinery (Monitor, CPU, Keyboard), while Software consists of intangible digital code and apps."
       },
       {
         id: "c9",
-        question: "What is a 'Folder' used for in a computer?",
-        marathiSub: "संगणकामध्ये 'फोल्डर' कशासाठी वापरले जाते?",
+        question: "In which fields are computers widely used today?",
+        marathiSub: "आज संगणकाचा वापर कोणत्या क्षेत्रात मोठ्या प्रमाणावर केला जातो?",
         options: [
-          "To clean dust from the monitor",
-          "To group and organize multiple files neatly",
-          "To browse websites",
-          "To speed up internet connection"
+          "Only gaming",
+          "Education, Banking, Healthcare, and Daily Communication",
+          "Only drawing pictures",
+          "Only calculating numbers"
         ],
         correctIndex: 1,
-        explanation: "Folders are digital containers used to organize, group, and manage files systematically."
+        explanation: "Computers are essential modern tools powering schools, digital banking, hospital healthcare, and global communications."
       },
       {
         id: "c10",
-        question: "Which storage device retains your files permanently even after turning off power?",
+        question: "Which storage device retains your files permanently even after power is turned off?",
         marathiSub: "संगणक बंद केल्यावरही कोणती मेमरी माहिती कायमस्वरूपी सुरक्षित ठेवते?",
-        options: ["RAM", "Hard Disk / SSD", "Cache Memory", "CPU Registers"],
+        options: ["RAM", "SSD / Hard Disk", "Cache Memory", "CPU Register"],
         correctIndex: 1,
         explanation: "Hard Disks and SSDs provide permanent, non-volatile storage for your photos, files, and programs."
+      }
+    ]
+  },
+
+  practical: {
+    title: "Practical Computer Skills Quiz (प्रात्यक्षिक संगणक कौशल्ये चाचणी)",
+    icon: "🖥️",
+    description: "Test your practical skills on Paint, folders, Notepad, copy-paste, renaming, deletion, mouse, and keyboard operations.",
+    questions: [
+      {
+        id: "p1",
+        question: "Which Windows application is commonly used for basic drawing, coloring, and shapes?",
+        marathiSub: "चित्रे काढण्यासाठी आणि रंग भरण्यासाठी कोणते मूलभूत ॲप वापरले जाते?",
+        options: ["MS Paint", "Notepad", "Calculator", "Recycle Bin"],
+        correctIndex: 0,
+        explanation: "Microsoft Paint is a built-in beginner-friendly drawing tool for freehand sketching, shapes, and colors."
+      },
+      {
+        id: "p2",
+        question: "What is the correct step to create a new folder on the Windows Desktop?",
+        marathiSub: "डेस्कटॉपवर नवीन फोल्डर तयार करण्यासाठी योग्य कृती कोणती?",
+        options: [
+          "Double click Recycle Bin",
+          "Right Click on Desktop → New → Folder",
+          "Press Ctrl + Alt + Delete",
+          "Click Start Menu → Shut down"
+        ],
+        correctIndex: 1,
+        explanation: "To create a folder, right-click on an empty space on Desktop, select 'New' from the context menu, and click 'Folder'."
+      },
+      {
+        id: "p3",
+        question: "Which simple program is used to write, edit, and save plain text files (.txt)?",
+        marathiSub: "साधा मजकूर लिहिण्यासाठी आणि जतन (.txt) करण्यासाठी कोणता प्रोग्राम वापरतात?",
+        options: ["Notepad", "Paint", "Media Player", "Task Manager"],
+        correctIndex: 0,
+        explanation: "Notepad is a lightweight built-in text editor ideal for typing quick notes and saving .txt files."
+      },
+      {
+        id: "p4",
+        question: "Which shortcut is used to COPY selected text or a file?",
+        marathiSub: "निवडलेला मजकूर किंवा फाइल कॉपी करण्यासाठी कोणता shortcut वापरला जातो?",
+        options: ["Ctrl + V", "Ctrl + C", "Ctrl + X", "Ctrl + Z"],
+        correctIndex: 1,
+        explanation: "Ctrl + C copies the selected item or text to your computer's clipboard without deleting the original."
+      },
+      {
+        id: "p5",
+        question: "Which shortcut is used to PASTE the copied content into its destination?",
+        marathiSub: "कॉपी केलेला मजकूर किंवा फाइल नवीन जागी पेस्ट (ठेवण्यासाठी) कोणता शॉर्टकट वापरतात?",
+        options: ["Ctrl + P", "Ctrl + S", "Ctrl + V", "Ctrl + C"],
+        correctIndex: 2,
+        explanation: "Ctrl + V pastes items from the clipboard into your currently focused folder or document."
+      },
+      {
+        id: "p6",
+        question: "What does the shortcut Ctrl + Z do?",
+        marathiSub: "Ctrl + Z या शॉर्टकट की चे कार्य काय आहे?",
+        options: [
+          "Undo the last action (शेवटची कृती पूर्ववत करणे)",
+          "Cut selected text",
+          "Close the window",
+          "Zoom in on screen"
+        ],
+        correctIndex: 0,
+        explanation: "Ctrl + Z is the universal Undo command that reverses your most recent action or deletion."
+      },
+      {
+        id: "p7",
+        question: "Which keyboard key allows you to quickly RENAME a selected file or folder?",
+        marathiSub: "निवडलेली फाइल किंवा फोल्डरचे नाव बदलण्यासाठी (Rename) कोणती की दाबावी?",
+        options: ["F1", "F2", "F5", "Esc"],
+        correctIndex: 1,
+        explanation: "Pressing F2 on a selected file or folder immediately highlights its name, allowing you to type a new name."
+      },
+      {
+        id: "p8",
+        question: "Where do deleted files go, and how can you get them back if deleted by mistake?",
+        marathiSub: "डिलीट केलेल्या फाइल्स कोठे जातात आणि चुकून डिलीट झाल्यास त्या कशा परत आणता येतात?",
+        options: [
+          "They go to Recycle Bin; open it and click 'Restore'",
+          "They are lost forever immediately",
+          "They go to the web browser",
+          "They get saved in MS Paint"
+        ],
+        correctIndex: 0,
+        explanation: "Files deleted from normal drives are placed in the Recycle Bin. You can open it, right-click the file, and select 'Restore'."
+      },
+      {
+        id: "p9",
+        question: "Which mouse action is used to open files, folders, or launch desktop programs?",
+        marathiSub: "फाइल किंवा फोल्डर उघडण्यासाठी माउसची कोणती कृती वापरली जाते?",
+        options: [
+          "Double Click (डावे बटण सलग दोनदा दाबणे)",
+          "Right Click once",
+          "Scroll wheel up",
+          "Hold mouse in air"
+        ],
+        correctIndex: 0,
+        explanation: "Double-clicking the left mouse button quickly opens folders, executes desktop shortcuts, and launches applications."
+      },
+      {
+        id: "p10",
+        question: "Which shortcut quickly saves your active document or project?",
+        marathiSub: "सुरू असलेली फाइल किंवा कागदपत्र झटपट सेव्ह (Save) करण्यासाठी कोणता शॉर्टकट वापरतात?",
+        options: ["Ctrl + S", "Ctrl + O", "Ctrl + N", "Alt + F4"],
+        correctIndex: 0,
+        explanation: "Ctrl + S is the universal save shortcut that prevents loss of unsaved changes."
       }
     ]
   },
@@ -124,7 +242,7 @@ const QUIZ_DATA = {
         id: "i2",
         question: "Which application is used to view websites on the internet?",
         marathiSub: "इंटरनेटवरील वेबसाइट पाहण्यासाठी कोणते ॲप वापरले जाते?",
-        options: ["Web Browser (e.g. Chrome, Firefox)", "MS Paint", "Notepad", "Media Player"],
+        options: ["Web Browser (e.g. Chrome, Edge, Firefox)", "MS Paint", "Notepad", "Media Player"],
         correctIndex: 0,
         explanation: "A Web Browser (like Google Chrome, Microsoft Edge, Safari, or Firefox) renders and displays websites."
       },
@@ -168,7 +286,7 @@ const QUIZ_DATA = {
           "To recharge mobile battery"
         ],
         correctIndex: 1,
-        explanation: "A search engine like Google or Bing scans the web to return relevant results for questions or keywords you enter."
+        explanation: "A search engine like Google scans the web to return relevant results for questions or keywords you enter."
       },
       {
         id: "i7",
@@ -185,18 +303,23 @@ const QUIZ_DATA = {
       },
       {
         id: "i8",
-        question: "Where do unsolicited or unwanted promotional/fraudulent emails usually get filtered?",
-        marathiSub: "अनोळखी किंवा संशयास्पद ईमेल साधारणतः कोणत्या फोल्डरमध्ये जमा होतात?",
-        options: ["Inbox", "Outbox", "Spam / Junk Folder", "Starred"],
-        correctIndex: 2,
-        explanation: "Spam or Junk mail folders collect suspicious, unsolicited, or bulk marketing emails automatically."
+        question: "What is the main purpose of the 'Subject' line in an email?",
+        marathiSub: "ईमेलमधील 'Subject' (विषय) चा मुख्य उद्देश काय असतो?",
+        options: [
+          "To write your email password",
+          "To provide a brief summary of what the email is about",
+          "To attach heavy video files",
+          "To mention the sender's mobile number"
+        ],
+        correctIndex: 1,
+        explanation: "The Subject line briefly informs the recipient what your message is about before they open it."
       },
       {
         id: "i9",
         question: "What is a 'Bookmark' in a web browser?",
         marathiSub: "वेब ब्राउझरमध्ये 'बुकमार्क' चा काय फायदा होतो?",
         options: [
-          "A virtual bookmark to save and quickly revisit favorite websites",
+          "A virtual shortcut to save and quickly revisit favorite websites",
           "A password protector",
           "A download accelerator",
           "An antivirus plugin"
@@ -215,141 +338,17 @@ const QUIZ_DATA = {
           "Upgrading RAM"
         ],
         correctIndex: 1,
-        explanation: "Uploading is the action of transmitting files from your device up to a remote server or social platform."
+        explanation: "Uploading is the action of transmitting files from your device up to a remote server, portal, or email attachment."
       }
     ]
   },
 
-  safety: {
-    title: "Digital Safety & Cyber Awareness (डिजिटल सुरक्षा चाचणी)",
-    icon: "🛡️",
-    description: "Assess your readiness against cyber scams, fake links, weak passwords, and OTP fraud.",
-    questions: [
-      {
-        id: "s1",
-        question: "A caller claiming to be a Bank Manager asks for your 6-digit OTP to unblock your card. What should you do?",
-        marathiSub: "बँक व्यवस्थापक असल्याचा दावा करणाऱ्या व्यक्तीने कार्ड चालू ठेवण्यासाठी OTP मागितला तर काय करावे?",
-        options: [
-          "Immediately give the OTP so your card remains active",
-          "Refuse immediately, never share OTP, and report to the bank",
-          "Give only the first 3 digits of the OTP",
-          "Share the OTP and ask for their employee ID later"
-        ],
-        correctIndex: 1,
-        explanation: "Golden Rule: Real banks and RBI never ask for OTPs or PINs. Never share your OTP with anyone under any circumstances!"
-      },
-      {
-        id: "s2",
-        question: "Which of the following is considered a STRONG password?",
-        marathiSub: "खालीलपैकी कोणता पासवर्ड सर्वात मजबूत (Strong) मानला जाईल?",
-        options: [
-          "12345678",
-          "password2026",
-          "Sanket@123",
-          "Tr#9qM$2k!Pz9"
-        ],
-        correctIndex: 3,
-        explanation: "Strong passwords combine uppercase letters, lowercase letters, numbers, and special symbols with at least 10-12 characters, avoiding common names."
-      },
-      {
-        id: "s3",
-        question: "What is 'Phishing' in cyber security?",
-        marathiSub: "सायबर सुरक्षेत 'फिशिंग' (Phishing) म्हणजे काय?",
-        options: [
-          "Catching digital fish in a video game",
-          "Fraudulent messages or fake websites designed to steal passwords and financial info",
-          "Fixing hardware bugs in a computer",
-          "Cleaning the browser history"
-        ],
-        correctIndex: 1,
-        explanation: "Phishing is a social engineering attack where cybercriminals trick users into sharing confidential credentials using fake urgency."
-      },
-      {
-        id: "s4",
-        question: "You receive an SMS: 'Your electricity power will be disconnected tonight. Pay ₹10 immediately at http://bijli-bill-quick.xyz'. What is this?",
-        marathiSub: "'वीज खंडित होईल, लगेच १० रुपये भरा' असा मेसेज आला तर हा कोणता प्रकार आहे?",
-        options: [
-          "An official government message that must be paid instantly",
-          "A classic cyber scam using urgency to steal your banking details",
-          "A benign mobile recharge reminder",
-          "A system software update alert"
-        ],
-        correctIndex: 1,
-        explanation: "Scammers create artificial panic with fake electricity disconnection threats. Genuine electricity boards send official notices with customer consumer numbers."
-      },
-      {
-        id: "s5",
-        question: "Why should you be cautious when using free public Wi-Fi at railway stations or cafes?",
-        marathiSub: "रेल्वे स्थानक किंवा कॅफेमधील मोफत सार्वजनिक वाय-फाय वापरताना सावध का राहावे?",
-        options: [
-          "It can drain phone battery faster",
-          "Unencrypted public Wi-Fi can allow cyber criminals on the same network to snoop on your data",
-          "Public Wi-Fi turns off phone Bluetooth",
-          "It permanently deletes phone contacts"
-        ],
-        correctIndex: 1,
-        explanation: "Public Wi-Fi networks often lack strong encryption, meaning hackers can intercept unencrypted data. Avoid online banking on open public Wi-Fi."
-      },
-      {
-        id: "s6",
-        question: "What does 'Two-Factor Authentication' (2FA) do?",
-        marathiSub: "टू-फॅक्टर ऑथेंटिकेशन (2FA) मुळे काय संरक्षण मिळते?",
-        options: [
-          "It requires two different monitors to log in",
-          "It adds a second layer of security (like an OTP or biometric) beyond just a password",
-          "It doubles the typing speed of your keyboard",
-          "It creates two identical copies of every file"
-        ],
-        correctIndex: 1,
-        explanation: "2FA requires both your password AND a verification code from your phone or authenticator app, keeping your account safe even if your password leaks."
-      },
-      {
-        id: "s7",
-        question: "How can you tell if a website link might be FAKE or suspicious?",
-        marathiSub: "एखादी लिंक बनावट किंवा संशयास्पद असू शकते हे कसे ओळखावे?",
-        options: [
-          "It has spelling variations like 'g00gle.com' or 'sbi-update.top'",
-          "It lacks the secure padlock icon or uses unusual domain extensions",
-          "It promises free money, lottery wins, or urgent account recovery",
-          "All of the above"
-        ],
-        correctIndex: 3,
-        explanation: "All of these are primary red flags! Fraudulent links often contain subtle misspellings, strange domains, and lure victims with greed or panic."
-      },
-      {
-        id: "s8",
-        question: "What is the best practice for social media privacy?",
-        marathiSub: "सोशल मीडियावर खाजगी माहिती सुरक्षित ठेवण्याचा उत्तम मार्ग कोणता?",
-        options: [
-          "Accept friend requests from every unknown stranger",
-          "Keep your profile private and avoid sharing Aadhaar, PAN, home address, or travel plans publicly",
-          "Post your phone number on your public bio so friends can call you",
-          "Use your birth date as your master password"
-        ],
-        correctIndex: 1,
-        explanation: "Protect your privacy by keeping profiles restricted to trusted people and never posting sensitive documents like Aadhaar, PAN, or tickets publicly."
-      },
-      {
-        id: "s9",
-        question: "What should you do if you realize you mistakenly entered your debit card details on a fake phishing website?",
-        marathiSub: "बनावट वेबसाइटवर चुकून बँक कार्ड तपशील भरले गेले तर त्वरित काय करावे?",
-        options: [
-          "Wait a month to see if money gets deducted",
-          "Immediately block your card via bank app/helpline and report to Cyber Crime Helpline (1930)",
-          "Turn off your phone and hope nothing happens",
-          "Delete the SMS from your phone"
-        ],
-        correctIndex: 1,
-        explanation: "Act immediately! Block the card via your bank app or customer helpline, change your passwords, and report the fraud at cybercrime.gov.in or helpline 1930."
-      },
-      {
-        id: "s10",
-        question: "What is the official National Cyber Crime Reporting Portal Helpline number in India?",
-        marathiSub: "भारतातील राष्ट्रीय सायबर गुन्हे नोंदणी हेल्पलाइन क्रमांक कोणता आहे?",
-        options: ["100", "1930", "108", "139"],
-        correctIndex: 1,
-        explanation: "Helpline 1930 is the official citizen financial cyber fraud reporting helpline in India."
-      }
-    ]
+  allInOne: {
+    title: "Grand Digital_Sakshar Challenge (महा डिजिटल साक्षर आव्हान)",
+    icon: "🏆",
+    description: "A comprehensive 15-question mixed challenge across Computer Basics, Practical Skills, and Internet Basics.",
+    questions: [] // Populated dynamically in QuizModule.startQuiz()
   }
 };
+
+window.QUIZ_DATA = QUIZ_DATA;

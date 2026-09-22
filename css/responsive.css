@@ -11,6 +11,11 @@
   .anatomy-grid {
     grid-template-columns: 1fr;
   }
+
+  .practical-layout {
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+  }
   
   .progress-dashboard {
     grid-template-columns: 1fr;
@@ -41,12 +46,77 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    z-index: 1000;
   }
 
   .main-nav.active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+  }
+
+  /* Practical Skills Mobile */
+  .practical-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .practical-sidebar {
+    position: static;
+  }
+
+  .practical-card {
+    padding: 1.25rem;
+  }
+
+  .step-pattern-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .copypaste-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-arrow {
+    transform: rotate(90deg);
+    margin: 0.5rem 0;
+  }
+
+  .deletion-sim-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-action-row {
+    flex-direction: column;
+  }
+
+  .mouse-challenges-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .virtual-keyboard-grid {
+    overflow-x: auto;
+    padding: 0.75rem 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .v-key {
+    min-width: 28px;
+    height: 36px;
+    font-size: 0.78rem;
+  }
+
+  .v-key.wide {
+    min-width: 48px;
+    font-size: 0.68rem;
+  }
+
+  .v-key.wider {
+    min-width: 58px;
+    font-size: 0.68rem;
+  }
+
+  .v-key.spacebar {
+    min-width: 130px;
   }
 
   .sorting-baskets {
@@ -58,15 +128,7 @@
   }
 
   .email-sidebar {
-    display: none; /* Collapsed for mobile simplicity */
-  }
-
-  .typing-stats-bar {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .visual-keyboard {
-    display: none; /* Hide heavy keyboard on small touch devices */
+    display: none;
   }
 
   .certificate-wrapper {

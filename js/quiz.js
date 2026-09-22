@@ -50,11 +50,11 @@ const QuizModule = {
     this.answered = false;
 
     if (catKey === "allInOne") {
-      // Blend questions from all 3 categories
+      // Blend questions from all 3 active categories (Computer, Practical, Internet)
       const allQ = [
         ...QUIZ_DATA.computer.questions,
-        ...QUIZ_DATA.internet.questions,
-        ...QUIZ_DATA.safety.questions
+        ...QUIZ_DATA.practical.questions,
+        ...QUIZ_DATA.internet.questions
       ];
       // Shuffle and pick 15
       this.questions = allQ.sort(() => 0.5 - Math.random()).slice(0, 15);

@@ -1,12 +1,13 @@
 /**
  * Digital_Sakshar - Core App Engine & Utilities
- * Manages audio synthesizer, speech synthesis, theming, routing, and toasts.
+ * Manages audio synthesizer, speech synthesis, theming, bilingual language switching (EN / मराठी), routing, and toasts.
  */
 
 const App = {
   audioCtx: null,
   speechSynth: window.speechSynthesis || null,
   currentRoute: "home",
+  currentLanguage: "en", // 'en' | 'mr'
 
   init() {
     // Initialize Local Storage state
@@ -16,10 +17,12 @@ const App = {
     const user = StorageManager.getUser();
     this.setTheme(user.theme || "light");
     this.setFontSize(user.fontSize || "normal");
+    this.setLanguage(user.language || "en");
 
     // Setup Navigation & Router
     this.setupRouter();
     this.setupAccessibilityControls();
+    this.setupLanguageToggle();
     this.setupDailyTip();
 
     // Setup global listeners for achievements
@@ -30,7 +33,51 @@ const App = {
       });
     });
 
-    console.log("Digital_Sakshar Platform initialized successfully 🌐💻🛡️");
+    console.log("Digital_Sakshar Platform initialized successfully 🌐💻");
+  },
+
+  // --------------------------------------------------------------------------
+  // Language Switcher (EN ⇄ मराठी)
+  // --------------------------------------------------------------------------
+  setupLanguageToggle() {
+    const btn = document.getElementById("langToggleBtn");
+    if (btn) {
+      btn.addEventListener("click", () => {
+        const nextLang = (this.currentLanguage === "en") ? "mr" : "en";
+        this.setLanguage(nextLang);
+        this.playSound("click");
+      });
+    }
+  },
+
+  setLanguage(lang) {
+    this.currentLanguage = lang;
+    document.documentElement.setAttribute("data-lang", lang);
+    StorageManager.updateUser({ language: lang });
+
+    const btn = document.getElementById("langToggleBtn");
+    if (btn) {
+      btn.innerHTML = (lang === "en") ? "🌐 EN | <strong>मर</strong>" : "🌐 <strong>EN</strong> | मर";
+      btn.title = (lang === "en") ? "Switch to Marathi (मराठीत बदला)" : "Switch to English (इंग्रजीत बदला)";
+    }
+
+    // Bilingual label adjustments
+    document.querySelectorAll("[data-i18n-en]").forEach(el => {
+      const en = el.getAttribute("data-i18n-en");
+      const mr = el.getAttribute("data-i18n-mr");
+      if (lang === "mr" && mr) {
+        el.textContent = mr;
+      } else if (en) {
+        el.textContent = en;
+      }
+    });
+
+    this.showToast(
+      lang === "mr" ? "भाषा बदलली: मराठी" : "Language Switched: English",
+      lang === "mr" ? "आता सर्व मुख्य माहिती मराठीत उपलब्ध आहे." : "Platform content is now in English.",
+      "info",
+      "🌐"
+    );
   },
 
   // --------------------------------------------------------------------------
@@ -71,17 +118,6 @@ const App = {
         gain.connect(ctx.destination);
         osc.start(now);
         osc.stop(now + 0.05);
-      } else if (type === "typewriter") {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(450 + Math.random() * 50, now);
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.03);
       } else if (type === "correct") {
         const osc1 = ctx.createOscillator();
         const osc2 = ctx.createOscillator();
@@ -103,56 +139,57 @@ const App = {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "sawtooth";
-        osc.frequency.setValueAtTime(160, now);
-        osc.frequency.linearRampToValueAtTime(110, now + 0.25);
-        gain.gain.setValueAtTime(0.18, now);
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.setValueAtTime(180, now + 0.1);
+        gain.gain.setValueAtTime(0.15, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start(now);
         osc.stop(now + 0.25);
       } else if (type === "fanfare") {
-        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, i) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
-          const t = now + idx * 0.1;
           osc.type = "triangle";
-          osc.frequency.setValueAtTime(freq, t);
-          gain.gain.setValueAtTime(0.18, t);
-          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+          osc.frequency.setValueAtTime(freq, now + (i * 0.08));
+          gain.gain.setValueAtTime(0.16, now + (i * 0.08));
+          gain.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.08) + 0.28);
           osc.connect(gain);
           gain.connect(ctx.destination);
-          osc.start(t);
-          osc.stop(t + 0.35);
+          osc.start(now + (i * 0.08));
+          osc.stop(now + (i * 0.08) + 0.28);
         });
       }
-    } catch (err) {
-      console.warn("Audio synth warning:", err);
+    } catch (e) {
+      console.warn("Web Audio playback failed:", e);
+    }
+  },
+
+  speak(text, lang = "en-US") {
+    const user = StorageManager.getUser();
+    if (!user.speechEnabled || !this.speechSynth) return;
+
+    try {
+      this.speechSynth.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      utterance.lang = lang;
+      this.speechSynth.speak(utterance);
+    } catch (e) {
+      console.warn("Speech synthesis unavailable:", e);
     }
   },
 
   // --------------------------------------------------------------------------
-  // Text to Speech Read Aloud (Accessibility)
-  // --------------------------------------------------------------------------
-  speak(text) {
-    const user = StorageManager.getUser();
-    if (!user.speechEnabled || !this.speechSynth) return;
-
-    this.speechSynth.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.95;
-    utterance.pitch = 1.0;
-    this.speechSynth.speak(utterance);
-  },
-
-  // --------------------------------------------------------------------------
-  // Theming & Accessibility Controls
+  // Theming & Accessibility
   // --------------------------------------------------------------------------
   setTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     StorageManager.updateUser({ theme });
-    
-    // Update theme toggle buttons UI
+
     document.querySelectorAll(".theme-btn").forEach(btn => {
       btn.classList.toggle("active", btn.getAttribute("data-theme-val") === theme);
     });
@@ -169,14 +206,15 @@ const App = {
 
   toggleSound() {
     const user = StorageManager.getUser();
-    const newState = !user.soundEnabled;
-    StorageManager.updateUser({ soundEnabled: newState });
-    this.updateSoundBtnUI(newState);
-    if (newState) {
+    const nextState = !user.soundEnabled;
+    StorageManager.updateUser({ soundEnabled: nextState });
+    this.updateSoundBtnUI(nextState);
+
+    if (nextState) {
       this.playSound("click");
-      this.showToast("Sound Effects Enabled", "Audio feedback is now active", "success", "🔊");
+      this.showToast("Sound Enabled", "Audio feedback is now active.", "info", "🔊");
     } else {
-      this.showToast("Muted", "Sound effects turned off", "warning", "🔇");
+      this.showToast("Sound Muted", "Audio feedback has been turned off.", "info", "🔇");
     }
   },
 
@@ -252,6 +290,12 @@ const App = {
   },
 
   navigateTo(route, updateHash = true) {
+    // Fallback if invalid route is requested
+    const validRoutes = ["home", "computer", "practical", "internet", "resources", "quiz", "progress"];
+    if (!validRoutes.includes(route)) {
+      route = "home";
+    }
+
     this.currentRoute = route;
     if (updateHash) {
       window.location.hash = route;
@@ -283,12 +327,10 @@ const App = {
     // Module specific initializers
     if (route === "computer" && window.ComputerModule) {
       window.ComputerModule.onEnter();
+    } else if (route === "practical" && window.PracticalSkillsModule) {
+      window.PracticalSkillsModule.onEnter();
     } else if (route === "internet" && window.InternetModule) {
       window.InternetModule.onEnter();
-    } else if (route === "safety" && window.SafetyModule) {
-      window.SafetyModule.onEnter();
-    } else if (route === "typing" && window.TypingModule) {
-      window.TypingModule.onEnter();
     } else if (route === "quiz" && window.QuizModule) {
       window.QuizModule.onEnter();
     } else if (route === "resources" && window.ResourcesModule) {
@@ -297,7 +339,7 @@ const App = {
       window.ProgressModule.onEnter();
     }
 
-    // Track topic view in home/stats
+    // Update index & check achievements
     StorageManager.checkAchievements();
   },
 
@@ -307,29 +349,29 @@ const App = {
   setupDailyTip() {
     const tips = [
       {
-        icon: "💡",
-        title: "Daily Tip: Beware of Fake Electricity Bill Messages",
-        text: "Scammers send urgent SMS claiming power will be cut unless you pay ₹10. Real government departments never send unofficial links. Do not click!"
+        icon: "💾",
+        title: "Daily Tip: Save Your Work Regularly (Ctrl + S)",
+        text: "While typing or drawing, press 'Ctrl + S' every few minutes. This prevents losing your valuable work during power cuts or system restarts."
       },
       {
-        icon: "🔑",
-        title: "Daily Tip: Never Share Your OTP",
-        text: "Bank staff, police, and government officials will NEVER call and ask for your 6-digit OTP or UPI PIN. Keep it 100% secret."
+        icon: "📁",
+        title: "Daily Tip: Organize with Named Folders",
+        text: "Avoid saving everything directly on your desktop. Create dedicated folders like 'Electricity_Bills' or 'Study_Notes' for instant access."
       },
       {
-        icon: "🛡️",
-        title: "Daily Tip: Look for HTTPS & The Lock Icon",
-        text: "Before typing passwords or payment details on any site, ensure the address starts with 'https://' and has a secure padlock icon."
+        icon: "🔒",
+        title: "Daily Tip: Always Check for HTTPS & Padlock",
+        text: "Before entering any login information on websites, make sure the address bar shows 'https://' and a locked padlock icon."
       },
       {
         icon: "⌨️",
-        title: "Daily Tip: Useful Keyboard Shortcut",
-        text: "Press 'Ctrl + C' to copy, 'Ctrl + V' to paste, and 'Ctrl + Z' to undo mistakes. These shortcuts save time every single day!"
+        title: "Daily Tip: Quick Rename with F2",
+        text: "Don't waste time right-clicking! Just click any file or folder and press the 'F2' key on your keyboard to instantly rename it."
       },
       {
-        icon: "🌐",
-        title: "Daily Tip: Protect Your Personal Data",
-        text: "Never upload clear photos of your Aadhaar card, PAN card, or boarding passes on public social media groups."
+        icon: "🗑️",
+        title: "Daily Tip: Recycle Bin vs Permanent Delete",
+        text: "Pressing 'Delete' moves files to the Recycle Bin so you can restore them. Pressing 'Shift + Delete' permanently erases files—use with care!"
       }
     ];
 
