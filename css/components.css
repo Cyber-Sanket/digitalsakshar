@@ -571,9 +571,12 @@
 
 /* Hero Section */
 .hero-section {
-  padding: 3rem 0 2rem;
+  padding: 3.5rem 0 3rem;
   position: relative;
   overflow: hidden;
+  min-height: 620px;
+  display: flex;
+  align-items: center;
 }
 
 .hero-section::before {
@@ -596,6 +599,7 @@
   align-items: center;
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
 .hero-content {

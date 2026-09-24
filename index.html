@@ -180,7 +180,7 @@
   <main class="container" style="flex-grow: 1; padding-top: 1.5rem; padding-bottom: 3rem;">
 
     <!-- ====================================================================
-         VIEW 1: HOME (Dashboard & Hub)
+         VIEW 1: HOME (Minimal Landing Page)
          ==================================================================== -->
     <section id="view-home" class="module-view animate-fade-in">
       <!-- Hero Section -->
@@ -193,13 +193,11 @@
               Become <span class="gradient-text">Digital Sakshar.</span>
             </h1>
             <p class="hero-desc">
-              An interactive, beginner-friendly digital literacy awareness web platform.
-              Understand computers, master practical PC operations with video demos, explore the internet, and earn your official digital literacy certificate!
+              An interactive, beginner-friendly digital literacy awareness web platform. Understand computers, master practical PC operations, explore the internet, and build your digital confidence step-by-step.
             </p>
             <div class="hero-actions">
               <button class="btn btn-primary btn-lg" onclick="App.navigateTo('computer')">💻 Start with Computer Basics</button>
               <button class="btn btn-outline btn-lg" onclick="App.navigateTo('practical')">🖥️ Practical PC Skills (PC वर हे कसं करायचं?)</button>
-              <button class="btn btn-secondary btn-lg" onclick="App.navigateTo('quiz')">🧠 Test Your Knowledge</button>
             </div>
           </div>
 
@@ -213,7 +211,7 @@
               <div class="progress-fill" id="heroProgressFill" style="width: 0%;"></div>
             </div>
             <p style="font-size: 0.86rem; color: var(--text-muted);">
-              Track completed activities, practical simulators, video lessons, and quizzes to unlock official certification.
+              Track completed activities, practical skills, video lessons and quizzes to unlock official certification.
             </p>
 
             <div class="quick-stats-grid">
@@ -234,132 +232,6 @@
                 <div class="stat-value">Eng + मराठी</div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Daily Digital Tip Banner -->
-      <div class="daily-tip-banner" id="dailyTipBanner">
-        <!-- Dynamically injected via App.setupDailyTip() -->
-      </div>
-
-      <!-- Modules Grid -->
-      <div class="section-header">
-        <h2>Explore Learning Modules</h2>
-        <div class="section-marathi-subtitle">सर्व अभ्यास घटक (All Learning Modules)</div>
-        <p class="section-desc">Click any module below to begin your hands-on digital journey with interactive activities and practical lessons.</p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
-        <!-- Card 1 -->
-        <div class="card card-interactive" onclick="App.navigateTo('computer')">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💻</div>
-          <div class="badge badge-primary">Module 1</div>
-          <h3 style="margin-top: 0.5rem;">Computer Basics</h3>
-          <div class="section-marathi-subtitle" style="font-size: 0.85rem;">संगणक मूलभूत ज्ञान</div>
-          <p style="font-size: 0.9rem; margin: 0.5rem 0 1rem;">
-            Explore hardware components, core concepts, uses of computers, input vs output sorting, and virtual desktop simulation.
-          </p>
-          <span style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">Explore Module ➡️</span>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card card-interactive" onclick="App.navigateTo('practical')">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🖥️</div>
-          <div class="badge badge-success">Hands-On Practice</div>
-          <h3 style="margin-top: 0.5rem;">Practical Computer Skills</h3>
-          <div class="section-marathi-subtitle" style="font-size: 0.85rem;">PC वर हे काम कसं करायचं?</div>
-          <p style="font-size: 0.9rem; margin: 0.5rem 0 1rem;">
-            9 step-by-step everyday tasks: Paint, folders, text files, copy-paste, rename, delete, restore, mouse, and keyboard with video demonstrations.
-          </p>
-          <span style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">Start Practical Guides ➡️</span>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="card card-interactive" onclick="App.navigateTo('internet')">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌐</div>
-          <div class="badge badge-primary">Module 3</div>
-          <h3 style="margin-top: 0.5rem;">Internet Basics</h3>
-          <div class="section-marathi-subtitle" style="font-size: 0.85rem;">इंटरनेट वापर व माहिती</div>
-          <p style="font-size: 0.9rem; margin: 0.5rem 0 1rem;">
-            Understand web browsers, practice with safe Google search simulator, write emails, and learn download vs upload & Wi-Fi.
-          </p>
-          <span style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">Explore Module ➡️</span>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="card card-interactive" onclick="App.navigateTo('resources')">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📚</div>
-          <div class="badge badge-primary">Knowledge Hub</div>
-          <h3 style="margin-top: 0.5rem;">Learning Resources</h3>
-          <div class="section-marathi-subtitle" style="font-size: 0.85rem;">व्हिडीओ, नोट्स व डिजिटल शब्दकोश</div>
-          <p style="font-size: 0.9rem; margin: 0.5rem 0 1rem;">
-            Curated video lessons, printable study notes, searchable A-Z digital dictionary, and Marathi ⇄ English terminology.
-          </p>
-          <span style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">View Resources ➡️</span>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="card card-interactive" onclick="App.navigateTo('quiz')">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🧠</div>
-          <div class="badge badge-success">Self Assessment</div>
-          <h3 style="margin-top: 0.5rem;">Interactive Quiz</h3>
-          <div class="section-marathi-subtitle" style="font-size: 0.85rem;">ज्ञान चाचणी व सराव प्रश्न</div>
-          <p style="font-size: 0.9rem; margin: 0.5rem 0 1rem;">
-            Test your grasp across Computer Basics, Practical Skills, and Internet Basics with 4 categories, instant answers, and scorecards.
-          </p>
-          <span style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">Take Quiz ➡️</span>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="card card-interactive" onclick="App.navigateTo('progress')">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📊</div>
-          <div class="badge badge-primary">Milestones</div>
-          <h3 style="margin-top: 0.5rem;">My Progress & Badges</h3>
-          <div class="section-marathi-subtitle" style="font-size: 0.85rem;">प्रगती आणि प्रमाणपत्र</div>
-          <p style="font-size: 0.9rem; margin: 0.5rem 0 1rem;">
-            Track your literacy index across all categories, unlock 8 achievement badges, and generate your printable certificate!
-          </p>
-          <span style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">Check Progress ➡️</span>
-        </div>
-      </div>
-
-      <!-- Target Audience Section -->
-      <div class="card" style="background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-input) 100%); padding: 2.5rem; margin-bottom: 2rem;">
-        <div class="section-header" style="margin-bottom: 1.5rem;">
-          <h2>Built for Everyone (सर्वांसाठी उपयुक्त)</h2>
-          <p class="section-desc">Designed with simple language, high-contrast options, and large text to ensure digital accessibility for every generation.</p>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.25rem; text-align: center;">
-          <div class="card" style="padding: 1rem;">
-            <div style="font-size: 2rem;">👦</div>
-            <strong style="display:block; margin-top:0.25rem;">Students</strong>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">शालेय विद्यार्थी</span>
-          </div>
-          <div class="card" style="padding: 1rem;">
-            <div style="font-size: 2rem;">👩🎓</div>
-            <strong style="display:block; margin-top:0.25rem;">Beginners</strong>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">नवशिक्या नागरिक</span>
-          </div>
-          <div class="card" style="padding: 1rem;">
-            <div style="font-size: 2rem;">👨🏫</div>
-            <strong style="display:block; margin-top:0.25rem;">Teachers</strong>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">शिक्षक व मार्गदर्शक</span>
-          </div>
-          <div class="card" style="padding: 1rem;">
-            <div style="font-size: 2rem;">👨👩👧</div>
-            <strong style="display:block; margin-top:0.25rem;">Parents</strong>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">पालक वर्ग</span>
-          </div>
-          <div class="card" style="padding: 1rem;">
-            <div style="font-size: 2rem;">👴</div>
-            <strong style="display:block; margin-top:0.25rem;">Senior Citizens</strong>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">ज्येष्ठ नागरिक</span>
-          </div>
-          <div class="card" style="padding: 1rem;">
-            <div style="font-size: 2rem;">💻</div>
-            <strong style="display:block; margin-top:0.25rem;">First-Time Users</strong>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">प्रथमच संगणक वापरणारे</span>
           </div>
         </div>
       </div>

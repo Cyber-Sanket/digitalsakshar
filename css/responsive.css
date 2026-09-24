@@ -3,6 +3,12 @@
    ========================================================================== */
 
 @media (max-width: 1024px) {
+  .hero-section {
+    min-height: auto;
+    padding: 2.5rem 0;
+    display: block;
+  }
+
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
